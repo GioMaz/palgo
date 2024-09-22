@@ -132,24 +132,24 @@ std::vector<Record> palgo(int N, int M, std::vector<int> &maxmg, std::vector<int
     return palgo_maxg(N, M, maxmg, minw, maxg);
 }
 
-// int main()
-// {
-//     // Dati initziali
-//     int N               = 3;
-//     int M               = 6;
-//     //                      Petto,  Schiena,    Spalle, Gambe   Bicipiti,   Tricipiti
-//     std::vector<int> maxmg   = { 12,     30,         8,      12,     12,         8 };
-//     std::vector<int> minw    = { 16,     24,         24,     12,     24,         12 };
-//
-//     auto records = palgo(N, M, maxmg, minw);
-//     if (records.size() == 0) {
-//         std::cout << "The input data is not in a correct format\n";
-//     }
-//     for (auto &record: records) {
-//         std::cout << "(giorno " << record.g
-//             << ", muscolo " << record.m
-//             << ", serie " << record.s << ")\n";
-//     }
-//
-//     return 0;
-// }
+int main()
+{
+    // Dati initziali
+    int N               = 3;
+    int M               = 6;
+    //                           Petto,  Schiena,    Spalle, Gambe   Bicipiti,   Tricipiti
+    std::vector<int> maxmg   = { 12,     30,         8,      12,     12,         8 };
+    std::vector<int> minw    = { 16,     24,         24,     12,     24,         12 };
+
+    auto records = palgo(N, M, maxmg, minw);
+    if (records.size() == 0) {
+        std::cout << "The input data is not in a correct format\n";
+    }
+    for (auto &record: records) {
+        std::cout << "(giorno " << record.g
+            << ", muscolo " << record.m
+            << ", serie " << record.s << ")\n";
+    }
+
+    return 0;
+}
