@@ -1,4 +1,5 @@
 palgo.js
+palgo.wasm
 *.wasm
 *.aux
 *.fdb_latexmk
