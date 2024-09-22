@@ -1,0 +1,8 @@
+palgo.js
+*.wasm
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.gz
