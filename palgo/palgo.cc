@@ -118,11 +118,7 @@ std::vector<Record> palgo_maxg(int N, int M, std::vector<int> &maxmg, std::vecto
     }
 
     std::sort(records.begin(), records.end(), compare_record);
-    // for (auto &record: records) {
-    //     std::cout << "(giorno " << record.g
-    //         << ", muscolo " << record.m
-    //         << ", serie " << record.s << ")\n";
-    // }
+
     return records;
 }
 

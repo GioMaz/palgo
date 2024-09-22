@@ -1,3 +1,4 @@
+node_modules/
 palgo.js
 palgo.wasm
 *.wasm
