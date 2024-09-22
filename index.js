@@ -1,16 +1,15 @@
-const palgoAlgo = async (module, N, M, maxmg, minw) => {
-
-  const maxmgVec = new module.IntVec();
+const palgoAlgo = async (wasmModule, N, M, maxmg, minw) => {
+  const maxmgVec = new wasmModule.IntVec();
   maxmg.forEach(x => {
     maxmgVec.push_back(x);
   });
 
-  const minwVec = new module.IntVec();
+  const minwVec = new wasmModule.IntVec();
   minw.forEach(x => {
     minwVec.push_back(x);
   });
 
-  const recordVec = module.palgo(N, M, maxmgVec, minwVec);
+  const recordVec = wasmModule.palgo(N, M, maxmgVec, minwVec);
   const records = [];
   for (let i = 0; i < recordVec.size(); i++) {
     records.push(recordVec.get(i));
@@ -25,14 +24,14 @@ class NamedRecord {
   }
 }
 
-const palgoWrapper = async (module, days, muscles) => {
+const palgoWrapper = async (wasmModule, days, muscles) => {
   const maxmg = [];
   const minw  = [];
   muscles.forEach(muscle => {
     maxmg.push(muscle.maxmg);
     minw.push(muscle.minw);
   });
-  const records = await palgoAlgo(module, days, muscles.length, maxmg, minw);
+  const records = await palgoAlgo(wasmModule, days, muscles.length, maxmg, minw);
   if (records.length == 0) {
     throw new Error("Input constraints are not satisfiable.");
   }
@@ -73,7 +72,7 @@ const createProgram = async () => {
   }
 };
 
-const palgoHandlerModule = module => {
+const palgoHandlerModule = wasmModule => {
   return async (req, res) => {
     const days = req.body.days;
     if (days === undefined) {
@@ -109,7 +108,7 @@ const palgoHandlerModule = module => {
     }
 
     try {
-      const namedRecords = await palgoWrapper(module, days, muscles);
+      const namedRecords = await palgoWrapper(wasmModule, days, muscles);
       res.status(200).json(namedRecords);
       return;
     } catch (error) {
@@ -121,14 +120,14 @@ const palgoHandlerModule = module => {
 
 (async () => {
   const factory = require('./palgo.js');
-  const module = await factory();
+  const wasmModule = await factory();
 
   const express = require('express');
   const app = express();
   const port = 8080;
 
   app.use(express.json())
-  app.post('/api', palgoHandlerModule(module));
+  app.post('/api', palgoHandlerModule(wasmModule));
 
   app.listen(port, () => {
     console.log("Listening on port " + port + "...");
