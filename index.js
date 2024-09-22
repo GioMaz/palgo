@@ -1,7 +1,7 @@
-const factory = require('./palgo.js');
-
 const palgoAlgo = async (N, M, maxmg, minw) => {
+  const factory = require('./palgo.js');
   const instance = await factory();
+
   const maxmgVec = new instance.IntVec();
   maxmg.forEach(x => {
     maxmgVec.push_back(x);
@@ -22,7 +22,7 @@ const palgoAlgo = async (N, M, maxmg, minw) => {
 
 const palgoWrapper = async (days, muscles) => {
   const maxmg = [];
-  const minw = [];
+  const minw  = [];
   muscles.forEach(muscle => {
     maxmg.push(muscle.maxmg);
     minw.push(muscle.minw);
@@ -48,6 +48,7 @@ const muscles = [
   { name: "Tricipiti",  maxmg: 8,   minw: 12, },
 ];
 
-palgoWrapper(days, muscles).then(namedRecords => {
+(async () => {
+  const namedRecords = await palgoWrapper(days, muscles);
   console.log(namedRecords);
-})
+})();
