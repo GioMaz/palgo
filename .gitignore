@@ -1,6 +1,6 @@
 node_modules/
-palgo.js
-palgo.wasm
+output.js
+output.wasm
 *.wasm
 *.aux
 *.fdb_latexmk
