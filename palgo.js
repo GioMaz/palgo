@@ -21,14 +21,14 @@ const palgoAlgo = async (wasmModule, N, M, maxmg, minw) => {
   return records;
 }
 
-export class NamedRecord {
+class NamedRecord {
   constructor(name, sets) {
     this.name = name;
     this.sets = sets;
   }
 }
 
-export const wrapper = async (wasmModule, days, muscles) => {
+const wrapper = async (wasmModule, days, muscles) => {
   const maxmg = [];
   const minw  = [];
   muscles.forEach(muscle => {
@@ -49,7 +49,7 @@ export const wrapper = async (wasmModule, days, muscles) => {
   return namedRecords;
 };
 
-export class Muscle {
+class Muscle {
   constructor(name, maxmg, minw) {
     this.name   = name;
     this.maxmg  = maxmg;
@@ -76,3 +76,4 @@ const createProgram = async () => {
   }
 };
 
+module.exports = { NamedRecord, wrapper, Muscle };
