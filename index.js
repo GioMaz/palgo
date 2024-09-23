@@ -14,6 +14,10 @@ const palgoAlgo = async (wasmModule, N, M, maxmg, minw) => {
   for (let i = 0; i < recordVec.size(); i++) {
     records.push(recordVec.get(i));
   }
+
+  maxmgVec.delete();
+  minwVec.delete();
+
   return records;
 }
 

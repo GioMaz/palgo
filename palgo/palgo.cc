@@ -38,8 +38,8 @@ int edmonds_karp(std::vector<std::vector<int>> &g, int source, int sink)
     int max_flow    = 0;
 
     while (bfs(g, source, sink, parent)) {
-        int path_flow   = INT_MAX;
-        int s           = sink;
+        int path_flow = INT_MAX;
+        int s = sink;
         while (s != source) {
             path_flow = std::min(path_flow, g[parent[s]][s]);
             s = parent[s];
@@ -68,11 +68,11 @@ std::vector<Record> palgo_maxg(int N, int M, std::vector<int> &maxmg, std::vecto
 {
     assert(maxmg.size() == M);
     assert(minw.size() == M);
-    int series = 0;
+    int sets = 0;
     for (int i = 0; i < N; i++) {
-        series += minw[i];
+        sets += minw[i];
     }
-    assert(series <= maxg * N);
+    assert(sets <= maxg * N);
 
     int n       = N + M + 2;
     int source  = 0;
@@ -135,8 +135,8 @@ std::vector<Record> palgo(int N, int M, std::vector<int> &maxmg, std::vector<int
 int main()
 {
     // Dati initziali
-    int N               = 3;
-    int M               = 6;
+    int N = 3;
+    int M = 6;
     //                           Petto,  Schiena,    Spalle, Gambe   Bicipiti,   Tricipiti
     std::vector<int> maxmg   = { 12,     30,         8,      12,     12,         8 };
     std::vector<int> minw    = { 16,     24,         24,     12,     24,         12 };
