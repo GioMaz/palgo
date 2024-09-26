@@ -79,16 +79,19 @@ std::vector<Record> palgo_maxg(int N, int M, std::vector<int> &maxmg, std::vecto
     int sink    = n-1;
     std::vector<std::vector<int>> g(n, std::vector<int>(n, 0));
 
+    // from S to every m_i
     for (int i = 0; i < M; i++) {
         g[0][1+i] = minw[i];
     }
 
+    // From every m_i to every g_j
     for (int i = 0; i < M; i++) {
         for (int j = 0; j < N; j++) {
             g[1+i][1+M+j] = maxmg[i];
         }
     }
 
+    // From every g_j to T
     for (int j = 0; j < N; j++) {
         g[1+M+j][n-1] = maxg;
     }
@@ -104,6 +107,7 @@ std::vector<Record> palgo_maxg(int N, int M, std::vector<int> &maxmg, std::vecto
         }
     }
 
+    // Get all the records with at least 1 serie
     for (int i = 0; i < M; i++) {
         for (int j = 0; j < N; j++) {
             int serie = g[1+M+j][1+i];
@@ -124,6 +128,7 @@ std::vector<Record> palgo_maxg(int N, int M, std::vector<int> &maxmg, std::vecto
 
 std::vector<Record> palgo(int N, int M, std::vector<int> &maxmg, std::vector<int> &minw)
 {
+    // Distribute series equally across days
     int maxg = 0;
     for (int i = 0; i < minw.size(); i++) {
         maxg += minw[i];

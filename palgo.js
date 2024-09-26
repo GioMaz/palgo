@@ -69,7 +69,7 @@ const createProgram = async () => {
   ];
 
   try {
-    const namedRecords = await palgoWrapper(days, muscles);
+    const namedRecords = await wrapper(days, muscles);
     console.log(namedRecords);
   } catch (error) {
     console.log(error);

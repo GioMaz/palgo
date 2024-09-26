@@ -9,4 +9,4 @@ output.js: $(PALGODIR)/palgo.cc $(PALGODIR)/bind.cc
 	emcc -lembind -o output.js $(PALGODIR)/palgo.cc $(PALGODIR)/bind.cc -s MODULARIZE=1
 
 clean:
-	rm output.js output.wasm
+	rm output.js output.wasm database.sqlite

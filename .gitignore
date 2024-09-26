@@ -1,6 +1,7 @@
 node_modules/
 output.js
 output.wasm
+database.sqlite
 *.wasm
 *.aux
 *.fdb_latexmk
