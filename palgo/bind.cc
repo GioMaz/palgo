@@ -12,4 +12,5 @@ EMSCRIPTEN_BINDINGS(my_module) {
     register_vector<Record>("RecordVec");
     register_vector<int>("IntVec");
     function("palgo", &palgo);
+    function("palgo_exercises", &palgo_exercises);
 }

@@ -137,23 +137,63 @@ std::vector<Record> palgo(int N, int M, std::vector<int> &maxmg, std::vector<int
     return palgo_maxg(N, M, maxmg, minw, maxg);
 }
 
+int last(int s, int d)
+{
+    return s % d
+        ? (s % d)
+        : (d);
+}
+
+std::vector<Record> palgo_exercises(int N, int M, std::vector<int> &maxg, std::vector<int> &minw, int mins, int maxs)
+{
+    auto records = palgo(N, M, maxg, minw);
+    std::vector<Record> exercises;
+
+    for (auto &record : records) {
+        if (record.s <= mins) {
+            exercises.push_back(record);
+        } else {
+            // Maximizing the last exercise for a specific muscle
+            // since last(record.s, d) is always <= d
+            int best_fit = mins;
+            for (int d = mins+1; d <= maxs; d++) {
+                if (last(record.s, d) > last(record.s, best_fit)) {
+                    best_fit = d;
+                }
+            }
+            while (record.s) {
+                Record exercise = {
+                    .g = record.g,
+                    .m = record.m,
+                    .s = std::min(best_fit, record.s),
+                };
+                exercises.push_back(exercise);
+                record.s -= exercise.s;
+            }
+        }
+    }
+
+    return exercises;
+}
+
 int main()
 {
     // Dati initziali
     int N = 3;
     int M = 6;
     //                           Petto,  Schiena,    Spalle, Gambe   Bicipiti,   Tricipiti
-    std::vector<int> maxmg   = { 12,     30,         8,      12,     12,         8 };
-    std::vector<int> minw    = { 16,     24,         24,     12,     24,         12 };
+    std::vector<int> maxmg   = { 11,     30,         8,      20,     10,         8 };
+    std::vector<int> minw    = { 22,     20,         20,     20,     23,         16 };
 
-    auto records = palgo(N, M, maxmg, minw);
+    auto records = palgo_exercises(N, M, maxmg, minw, 3, 4);
     if (records.size() == 0) {
         std::cout << "The input data is not in a correct format\n";
     }
     for (auto &record: records) {
-        std::cout << "(giorno " << record.g
-            << ", muscolo " << record.m
-            << ", serie " << record.s << ")\n";
+        std::cout
+            << "(g"     << record.g
+            << ", m"    << record.m
+            << ", s"    << record.s << ")\n";
     }
 
     return 0;

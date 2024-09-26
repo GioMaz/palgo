@@ -1,4 +1,4 @@
-const getPalgoHandler = (wasmModule, palgo, db, data) => {
+const getNewHandler = (wasmModule, palgo, db, data) => {
   return async (req, res) => {
     const days = req.body.days;
     if (days === undefined) {
@@ -47,7 +47,7 @@ const getPalgoHandler = (wasmModule, palgo, db, data) => {
   };
 };
 
-const getHistoryHandler = (db, data) => {
+const getOldHandler = (db, data) => {
   return async (req, res) => {
     const id = req.session.id;
     const result = await data.getNamedRecords(db, id);
@@ -99,8 +99,8 @@ const getSetCookie = (db, data) => {
 
   app.use(express.json())
   app.use(getSetCookie(db, data));
-  app.post('/api/new', getPalgoHandler(wasmModule, palgo, db, data));
-  app.get('/api/old', getHistoryHandler(db, data));
+  app.post('/api/new', getNewHandler(wasmModule, palgo, db, data));
+  app.get('/api/old', getOldHandler(db, data));
 
   app.listen(port, () => {
     console.log("Listening on port " + port + "...");

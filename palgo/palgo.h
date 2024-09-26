@@ -14,3 +14,4 @@ bool compare_record(Record r1, Record r2);
 
 std::vector<Record> palgo_maxg(int N, int M, std::vector<int> &maxmg, std::vector<int> &minw, int maxg);
 std::vector<Record> palgo(int N, int M, std::vector<int> &maxmg, std::vector<int> &minw);
+std::vector<Record> palgo_exercises(int N, int M, std::vector<int> &maxg, std::vector<int> &minw, int mins, int maxs);

@@ -9,7 +9,8 @@ const palgoAlgo = async (wasmModule, N, M, maxmg, minw) => {
     minwVec.push_back(x);
   });
 
-  const recordVec = wasmModule.palgo(N, M, maxmgVec, minwVec);
+  // const recordVec = wasmModule.palgo(N, M, maxmgVec, minwVec);
+  const recordVec = wasmModule.palgo_exercises(N, M, maxmgVec, minwVec, 3, 4);
   const records = [];
   for (let i = 0; i < recordVec.size(); i++) {
     records.push(recordVec.get(i));
