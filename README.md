@@ -1,4 +1,4 @@
-### Palgo
+# Palgo
 
 Algoritmo per schede di palestra vincolate
 
