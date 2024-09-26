@@ -64,10 +64,11 @@ bool compare_record(Record r1, Record r2)
     return r1.g < r2.g;
 }
 
-std::vector<Record> palgo_maxg(int N, int M, std::vector<int> &maxmg, std::vector<int> &minw, int maxg)
+std::vector<Record> palgo_maxg(int N, std::vector<int> &maxmg, std::vector<int> &minw, int maxg)
 {
-    assert(maxmg.size() == M);
-    assert(minw.size() == M);
+    assert(maxmg.size() == minw.size());
+    int M = maxmg.size();
+
     int sets = 0;
     for (int i = 0; i < N; i++) {
         sets += minw[i];
@@ -126,15 +127,17 @@ std::vector<Record> palgo_maxg(int N, int M, std::vector<int> &maxmg, std::vecto
     return records;
 }
 
-std::vector<Record> palgo(int N, int M, std::vector<int> &maxmg, std::vector<int> &minw)
+std::vector<Record> palgo(int N, std::vector<int> &maxmg, std::vector<int> &minw)
 {
+    assert(maxmg.size() == minw.size());
+
     // Distribute series equally across days
     int maxg = 0;
     for (int i = 0; i < minw.size(); i++) {
         maxg += minw[i];
     }
     maxg = ceil((float)maxg / (float)N);
-    return palgo_maxg(N, M, maxmg, minw, maxg);
+    return palgo_maxg(N, maxmg, minw, maxg);
 }
 
 int last(int s, int d)
@@ -144,9 +147,11 @@ int last(int s, int d)
         : (d);
 }
 
-std::vector<Record> palgo_exercises(int N, int M, std::vector<int> &maxg, std::vector<int> &minw, int mins, int maxs)
+std::vector<Record> palgo_exercises(int N, std::vector<int> &maxmg, std::vector<int> &minw, int mins, int maxs)
 {
-    auto records = palgo(N, M, maxg, minw);
+    assert(maxmg.size() == minw.size());
+
+    auto records = palgo(N, maxmg, minw);
     std::vector<Record> exercises;
 
     for (auto &record : records) {
@@ -178,14 +183,13 @@ std::vector<Record> palgo_exercises(int N, int M, std::vector<int> &maxg, std::v
 
 int main()
 {
-    // Dati initziali
+    //                          Dati initziali
+    //                          Petto,  Schiena,    Spalle, Gambe   Bicipiti,   Tricipiti
     int N = 3;
-    int M = 6;
-    //                           Petto,  Schiena,    Spalle, Gambe   Bicipiti,   Tricipiti
-    std::vector<int> maxmg   = { 11,     30,         8,      20,     10,         8 };
-    std::vector<int> minw    = { 22,     20,         20,     20,     23,         16 };
+    std::vector<int> maxmg  = { 11,     30,         8,      20,     10,         8 };
+    std::vector<int> minw   = { 22,     20,         20,     20,     23,         16 };
 
-    auto records = palgo_exercises(N, M, maxmg, minw, 3, 4);
+    auto records = palgo_exercises(N, maxmg, minw, 3, 4);
     if (records.size() == 0) {
         std::cout << "The input data is not in a correct format\n";
     }

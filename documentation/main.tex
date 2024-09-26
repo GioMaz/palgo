@@ -131,4 +131,17 @@ L'algoritmo finale ha costo complessivo pari alla somma dei precedenti:
 \end{split}
 \end{equation*}
 
+\section{Post-processing}
+È possibile effettuare del post-processing per trasformare l'output
+dell'algoritmo da una sequenza di assegnazioni a una sequenza di esercizi, per
+fare questo è necessario prendere in input due valori $mins$ e $maxs$ che
+rappresentano rispettivamente il numero minimo e massimo di serie per esercizio.
+L'idea di base è quella di trovare un valore $d \in [mins, maxs]$ di serie per
+esercizio che vada a massimizzare il numero di serie dell'ultimo esercizio
+dell'assegnazione. Siccome il numero massimo di assegnazioni è $O((M+N)^2)$ e
+per ogni assegnazione svolgiamo un ciclo di costo
+$O(\frac{k}{\text{mins}}) = O(k)$ dove $k$ è il numero di serie per quel
+determinato record, il costo di questa fase è $O((M+N)^2k)$ che, per l'algoritmo
+complessivo va a sommarsi alla complessità calcolata nella sezione precedente.
+
 \end{document}

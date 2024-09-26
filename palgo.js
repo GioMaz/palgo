@@ -1,4 +1,4 @@
-const palgoAlgo = async (wasmModule, N, M, maxmg, minw) => {
+const palgoAlgo = async (wasmModule, N, maxmg, minw) => {
   const maxmgVec = new wasmModule.IntVec();
   maxmg.forEach(x => {
     maxmgVec.push_back(x);
@@ -10,7 +10,7 @@ const palgoAlgo = async (wasmModule, N, M, maxmg, minw) => {
   });
 
   // const recordVec = wasmModule.palgo(N, M, maxmgVec, minwVec);
-  const recordVec = wasmModule.palgo_exercises(N, M, maxmgVec, minwVec, 3, 4);
+  const recordVec = wasmModule.palgo_exercises(N, maxmgVec, minwVec, 3, 4);
   const records = [];
   for (let i = 0; i < recordVec.size(); i++) {
     records.push(recordVec.get(i));
@@ -36,7 +36,7 @@ const wrapper = async (wasmModule, days, muscles) => {
     maxmg.push(muscle.maxmg);
     minw.push(muscle.minw);
   });
-  const records = await palgoAlgo(wasmModule, days, muscles.length, maxmg, minw);
+  const records = await palgoAlgo(wasmModule, days, maxmg, minw);
   if (records.length == 0) {
     throw new Error("Input constraints are not satisfiable.");
   }
