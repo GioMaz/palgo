@@ -1,3 +1,5 @@
+// TODO: Use IPC or FFI instead of WASM for connecting JS to C++
+
 const getNewHandler = (wasmModule, palgo, db, data) => {
   return async (req, res) => {
     const days = req.body.days;
