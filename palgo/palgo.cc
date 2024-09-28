@@ -147,7 +147,7 @@ int last(int s, int d)
         : (d);
 }
 
-std::vector<Record> palgo_exercises(int N, std::vector<int> &maxmg, std::vector<int> &minw, int mins, int maxs)
+std::vector<Record> palgo_exercises1(int N, std::vector<int> &maxmg, std::vector<int> &minw, int mins, int maxs)
 {
     assert(maxmg.size() == minw.size());
 
@@ -166,6 +166,7 @@ std::vector<Record> palgo_exercises(int N, std::vector<int> &maxmg, std::vector<
                     best_fit = d;
                 }
             }
+
             while (record.s) {
                 Record exercise = {
                     .g = record.g,
@@ -181,6 +182,67 @@ std::vector<Record> palgo_exercises(int N, std::vector<int> &maxmg, std::vector<
     return exercises;
 }
 
+bool subdivide_aux(Record record, int mins, int maxs, std::vector<Record> &exercises)
+{
+    if (record.s == 0) {
+        return true;
+    } else if (record.s < 0) {
+        return false;
+    } else {
+        for (int c = maxs; c >= mins; c--) {
+            Record record_new = {
+                .g = record.g,
+                .m = record.m,
+                .s = c
+            };
+            exercises.push_back(record_new);
+
+            record.s -= c;
+            bool rv = subdivide_aux(record, mins, maxs, exercises);
+            if (rv) {
+                return true;
+            }
+            record.s += c;
+
+            exercises.pop_back();
+        }
+    }
+    return false;
+}
+
+std::vector<Record> subdivide(Record record, int mins, int maxs)
+{
+    std::vector<Record> exercises;
+    bool rv = subdivide_aux(record, mins, maxs, exercises);
+    if (!rv) {
+        exercises.clear();
+        exercises.push_back(record);
+        // std::cout << "Failed to subdivide record";
+        // std::cout
+        //     << " (g"    << record.g
+        //     << ", m"    << record.m
+        //     << ", s"    << record.s << ")\n";
+    }
+    return exercises;
+}
+
+std::vector<Record> palgo_exercises2(int N, std::vector<int> &maxmg, std::vector<int> &minw, int mins, int maxs)
+{
+    assert(maxmg.size() == minw.size());
+
+    auto records = palgo(N, maxmg, minw);
+    std::vector<Record> exercises;
+
+    for (auto &record : records) {
+        auto record_exercises = subdivide(record, mins, maxs);
+        exercises.insert(exercises.end(),
+                std::begin(record_exercises),
+                std::end(record_exercises));
+    }
+
+    return exercises;
+}
+
 int main()
 {
     //                          Dati initziali
@@ -189,7 +251,7 @@ int main()
     std::vector<int> maxmg  = { 11,     30,         8,      20,     10,         8 };
     std::vector<int> minw   = { 22,     20,         20,     20,     23,         16 };
 
-    auto records = palgo_exercises(N, maxmg, minw, 3, 4);
+    auto records = palgo_exercises2(N, maxmg, minw, 3, 4);
     if (records.size() == 0) {
         std::cout << "The input data is not in a correct format\n";
     }
