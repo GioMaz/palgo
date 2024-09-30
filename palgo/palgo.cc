@@ -231,7 +231,6 @@ std::vector<Record> subdivide(Record record, int mins, int maxs)
         exercises.clear();
         exercises.push_back(record);
     }
-    flatten(exercises);
     return exercises;
 }
 
@@ -244,6 +243,7 @@ std::vector<Record> palgo_exercises2(int N, std::vector<int> &maxmg, std::vector
 
     for (auto &record : records) {
         auto record_exercises = subdivide(record, mins, maxs);
+        flatten(record_exercises);
         exercises.insert(exercises.end(),
                 std::begin(record_exercises),
                 std::end(record_exercises));
