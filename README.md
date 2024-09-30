@@ -6,7 +6,7 @@ Per la spiegazione del funzionamento dell'algoritmo alla base consultare la [doc
 
 ### Funzionamento
 
-L'api richiede il passaggio di un json nel body contenente i vincoli come da esempio.
+L'api richiede il passaggio di un json nel body contenente i vincoli come da esempio:
 
 ```bash
 {
