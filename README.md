@@ -47,7 +47,7 @@ Un esempio è il seguente:
 Un esempio di richiesta è la seguente:
 
 ```bash
-curl http://localhost:8080/api/new \
+curl http://localhost:8081/api/new \
      -H 'Content-Type: application/json' \
      -X POST \
      -v \

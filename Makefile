@@ -1,12 +1,15 @@
+CC=g++
+CFLAGS=-std=c++11 -Wall -O3
 PALGODIR=./palgo
 
-.PHONY: run clean
+palgo_server: $(PALGODIR)/server.cc $(PALGODIR)/palgo.cc
+	$(CC) $(CFLAGS) $^ -o palgo_server
 
-run: index.js output.js
-	node index.js
+.PHONY: clean
 
-output.js: $(PALGODIR)/palgo.cc $(PALGODIR)/bind.cc
-	emcc -lembind -o output.js $(PALGODIR)/palgo.cc $(PALGODIR)/bind.cc -s MODULARIZE=1
+run: palgo_server
+	./palgo_server
 
 clean:
-	rm output.js output.wasm database.sqlite
+	rm palgo_server database.sqlite
+

@@ -76,8 +76,6 @@ std::vector<Record> palgo_maxg(int N, std::vector<int> &maxmg, std::vector<int> 
     assert(sets <= maxg * N);
 
     int n       = N + M + 2;
-    int source  = 0;
-    int sink    = n-1;
     std::vector<std::vector<int>> g(n, std::vector<int>(n, 0));
 
     // from S to every m_i
@@ -97,7 +95,7 @@ std::vector<Record> palgo_maxg(int N, std::vector<int> &maxmg, std::vector<int> 
         g[1+M+j][n-1] = maxg;
     }
 
-    int max_flow = edmonds_karp(g, 0, n-1);
+    edmonds_karp(g, 0, n-1);
 
     std::vector<Record> records;
 
@@ -186,7 +184,7 @@ bool subdivide_aux(Record record, int mins, int maxs, std::vector<Record> &exerc
 {
     if (record.s == 0) {
         return true;
-    } else if (record.s < 0) {
+    } else if (record.s < mins) {
         return false;
     } else {
         for (int c = maxs; c >= mins; c--) {
@@ -210,6 +208,21 @@ bool subdivide_aux(Record record, int mins, int maxs, std::vector<Record> &exerc
     return false;
 }
 
+void flatten(std::vector<Record> &exercises)
+{
+    for (int i = 0; i < exercises.size(); i++) {
+        for (int j = 0; j < exercises.size(); j++) {
+            if (i != j) {
+                float mean = ((float)(exercises[i].s + exercises[j].s)) / 2.0f;
+                int tmpsi = floor(mean);
+                int tmpsj = ceil(mean);
+                exercises[i].s = tmpsi;
+                exercises[j].s = tmpsj;
+            }
+        }
+    }
+}
+
 std::vector<Record> subdivide(Record record, int mins, int maxs)
 {
     std::vector<Record> exercises;
@@ -217,12 +230,8 @@ std::vector<Record> subdivide(Record record, int mins, int maxs)
     if (!rv) {
         exercises.clear();
         exercises.push_back(record);
-        // std::cout << "Failed to subdivide record";
-        // std::cout
-        //     << " (g"    << record.g
-        //     << ", m"    << record.m
-        //     << ", s"    << record.s << ")\n";
     }
+    flatten(exercises);
     return exercises;
 }
 
@@ -243,24 +252,24 @@ std::vector<Record> palgo_exercises2(int N, std::vector<int> &maxmg, std::vector
     return exercises;
 }
 
-int main()
-{
-    //                          Dati initziali
-    //                          Petto,  Schiena,    Spalle, Gambe   Bicipiti,   Tricipiti
-    int N = 3;
-    std::vector<int> maxmg  = { 11,     30,         8,      20,     10,         8 };
-    std::vector<int> minw   = { 22,     20,         20,     20,     23,         16 };
-
-    auto records = palgo_exercises2(N, maxmg, minw, 3, 4);
-    if (records.size() == 0) {
-        std::cout << "The input data is not in a correct format\n";
-    }
-    for (auto &record: records) {
-        std::cout
-            << "(g"     << record.g
-            << ", m"    << record.m
-            << ", s"    << record.s << ")\n";
-    }
-
-    return 0;
-}
+// int main()
+// {
+//     //                          Dati initziali
+//     //                          Petto,  Schiena,    Spalle, Gambe   Bicipiti,   Tricipiti
+//     int N = 3;
+//     std::vector<int> maxmg  = { 11,     30,         8,      20,     10,         8 };
+//     std::vector<int> minw   = { 22,     20,         20,     20,     23,         16 };
+//
+//     auto records = palgo_exercises2(N, maxmg, minw, 3, 4);
+//     if (records.size() == 0) {
+//         std::cout << "The input data is not in a correct format\n";
+//     }
+//     for (auto &record: records) {
+//         std::cout
+//             << "(g"     << record.g
+//             << ", m"    << record.m
+//             << ", s"    << record.s << ")\n";
+//     }
+//
+//     return 0;
+// }

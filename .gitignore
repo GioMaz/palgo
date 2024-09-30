@@ -1,7 +1,6 @@
-node_modules/
-output.js
-output.wasm
+palgo_server
 database.sqlite
+node_modules/
 *.wasm
 *.aux
 *.fdb_latexmk

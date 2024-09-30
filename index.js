@@ -1,6 +1,4 @@
-// TODO: Use IPC or FFI instead of WASM for connecting JS to C++
-
-const getNewHandler = (wasmModule, palgo, db, data) => {
+const getNewHandler = (palgo, db, data) => {
   return async (req, res) => {
     const days = req.body.days;
     if (days === undefined) {
@@ -37,7 +35,7 @@ const getNewHandler = (wasmModule, palgo, db, data) => {
 
     try {
       const id = req.session.id;
-      const namedRecords = await palgo.wrapper(wasmModule, days, muscles);
+      const namedRecords = await palgo.wrapper(days, muscles);
       const result = await data.insertNamedRecords(db, id, namedRecords);
 
       res.status(200).json(namedRecords);
@@ -74,15 +72,12 @@ const getSetCookie = (db, data) => {
 }
 
 (async () => {
-  const factory = require('./output.js');
-  const wasmModule = await factory();
-
   const palgo = require('./palgo.js');
 
   // Setup express and cookies
   const express = require('express');
   const app = express();
-  const port = process.env.PORT || 8080;
+  const port = process.env.PORT || 8081;
   const cookieSession = require('cookie-session');
   app.use(cookieSession({
     name: 'session',
@@ -101,7 +96,7 @@ const getSetCookie = (db, data) => {
 
   app.use(express.json())
   app.use(getSetCookie(db, data));
-  app.post('/api/new', getNewHandler(wasmModule, palgo, db, data));
+  app.post('/api/new', getNewHandler(palgo, db, data));
   app.get('/api/old', getOldHandler(db, data));
 
   app.listen(port, () => {

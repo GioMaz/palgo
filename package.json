@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "make run",
+    "start": "node index.js",
     "clean": "make clean"
   },
   "author": "",
