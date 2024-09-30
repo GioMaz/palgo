@@ -1,4 +1,5 @@
 palgo_server
+palgo_client
 database.sqlite
 node_modules/
 *.wasm
