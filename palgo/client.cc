@@ -50,7 +50,7 @@ int main()
     struct sockaddr_in welc_addr;
     welc_addr.sin_family            = AF_INET;
     welc_addr.sin_addr.s_addr       = ntohl(INADDR_LOOPBACK);
-    welc_addr.sin_port              = ntohs(8080);
+    welc_addr.sin_port              = ntohs(PORT);
 
     int rv = connect(fd, (struct sockaddr *)&welc_addr, sizeof(welc_addr));
     if (rv) {

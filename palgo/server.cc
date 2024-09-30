@@ -123,10 +123,9 @@ int main()
     setsockopt(welc_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 
     struct sockaddr_in welc_addr;
-    int port                        = 8080;
     welc_addr.sin_family            = AF_INET;
     welc_addr.sin_addr.s_addr       = htonl(0);
-    welc_addr.sin_port              = htons(port);
+    welc_addr.sin_port              = htons(PORT);
 
     rv = bind(welc_fd, (struct sockaddr *)&welc_addr, sizeof(welc_addr));
     if (rv < 0) {
@@ -140,7 +139,7 @@ int main()
         exit(1);
     }
 
-    printf("Listening on port %d...\n", port);
+    printf("Listening on port %d...\n", PORT);
 
     while (1) {
         struct sockaddr addr;
