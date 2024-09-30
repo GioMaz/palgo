@@ -15,9 +15,9 @@ const convertU32ArrayToU8ArrayLE = array => {
 
 const convertU8ArrayToU32LE = array => {
   return (array[0] << 0)
-       + (array[1] << 8)
-       + (array[2] << 16)
-       + (array[3] << 24);
+       | (array[1] << 8)
+       | (array[2] << 16)
+       | (array[3] << 24);
 }
 
 const convertU8ArrayToU32ArrayLE = array => {

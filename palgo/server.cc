@@ -77,7 +77,7 @@ void write_response(int fd, std::vector<Record> &exercises)
 void *handle_request(void *heap_fd)
 {
     int fd = *((int *)heap_fd);
-    printf("Initiated request handling for %d\n", fd);
+    printf("Initiated request handling for fd %d\n", fd);
 
     // Read input
     u32 days;
