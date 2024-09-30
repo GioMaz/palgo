@@ -1,44 +1,26 @@
 # Palgo
 
-Algoritmo per schede di palestra vincolate
+Algoritmo per la creazione di schede di palestra vincolate.
+
+Per la spiegazione del funzionamento dell'algoritmo alla base consultare la [documentazione](./documentation/main.pdf)
 
 ### Funzionamento
 
-L'api richiede il passaggio di un json nel body contenente i vincoli.
-Un esempio è il seguente:
+L'api richiede il passaggio di un json nel body contenente i vincoli come da esempio.
 
 ```bash
 {
     "days": 3,
         "muscles": [
         {
-            "name": "Petto",
+            "name": "Upper body",
             "maxmg": 12,
             "minw": 24
         },
         {
-            "name":"Schiena",
+            "name":"Lower body",
             "maxmg":30,
             "minw":24
-        },
-        {
-            "name":"Spalle",
-            "maxmg":8,
-            "minw":24},
-        {
-            "name":"Gambe",
-            "maxmg":12,
-            "minw":12
-        },
-        {
-            "name":"Bicipiti",
-            "maxmg":12,
-            "minw":24
-        },
-        {
-            "name":"Tricipiti",
-            "maxmg":8,
-            "minw":12
         }
     ]
 }
