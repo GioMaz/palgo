@@ -2,7 +2,7 @@
 
 Algoritmo per la creazione di schede di palestra vincolate.
 
-Per la spiegazione del funzionamento dell'algoritmo alla base consultare la [documentazione](./documentation/main.pdf)
+Per la spiegazione del funzionamento dell'algoritmo alla base consultare la [documentazione](./docs/main.pdf)
 
 ### Funzionamento
 
