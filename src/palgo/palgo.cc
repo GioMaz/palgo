@@ -214,10 +214,8 @@ void flatten(std::vector<Record> &exercises)
         for (int j = 0; j < exercises.size(); j++) {
             if (i != j) {
                 float mean = ((float)(exercises[i].s + exercises[j].s)) / 2.0f;
-                int tmpsi = floor(mean);
-                int tmpsj = ceil(mean);
-                exercises[i].s = tmpsi;
-                exercises[j].s = tmpsj;
+                exercises[i].s = floor(mean);
+                exercises[j].s = ceil(mean);
             }
         }
     }
