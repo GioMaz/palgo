@@ -18,18 +18,18 @@ const getNewHandler = (palgo, db, data) => {
         res.status(400).json({message: "Muscle name is not specified."});
         return;
       }
-      if (muscles[i].maxmg === undefined) {
+      if (muscles[i].maxDaily === undefined) {
         res.status(400).json({message: "Muscle daily maximum is not specified."});
         return;
       }
-      if (muscles[i].minw === undefined) {
+      if (muscles[i].minWeekly === undefined) {
         res.status(400).json({message: "Muscle weekly minimum is not specified."});
         return;
       }
       musclesList.push(new palgo.Muscle(
         muscles[i].name,
-        muscles[i].maxmg,
-        muscles[i].minw,
+        muscles[i].maxDaily,
+        muscles[i].minWeekly,
       ));
     }
 

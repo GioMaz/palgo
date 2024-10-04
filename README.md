@@ -1,12 +1,12 @@
 # Palgo
 
-Algoritmo per la creazione di schede di palestra vincolate.
+Algorithm for the creation of constrained training schedules.
 
-Per la spiegazione del funzionamento dell'algoritmo alla base consultare la [documentazione](./docs/main.pdf)
+For the explaination of the underlying algorithm read the [documentation](./docs/main.pdf).
 
 ### Funzionamento
 
-L'api richiede il passaggio di un json nel body contenente i vincoli come da esempio:
+To apply the algorithm pass a json string containing the input constraints to the body of the request:
 
 ```json
 {
@@ -14,19 +14,19 @@ L'api richiede il passaggio di un json nel body contenente i vincoli come da ese
         "muscles": [
         {
             "name": "Upper body",
-            "maxmg": 12,
-            "minw": 24
+            "maxDaily": 12,
+            "minWeekly": 24
         },
         {
             "name":"Lower body",
-            "maxmg":30,
-            "minw":24
+            "maxDaily": 30,
+            "minWeekly": 24
         }
     ]
 }
 ```
 
-Un esempio di richiesta è la seguente:
+An exmaple of a request is the following:
 
 ```bash
 curl http://localhost:8081/api/new \

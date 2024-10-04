@@ -37,7 +37,7 @@ class Record {
   }
 }
 
-const palgoAlgo = async (N, maxmg, minw) => {
+const palgoAlgo = async (N, maxDaily, minWeekly) => {
   const net = require('net');
 
   const resultU8  = [];
@@ -45,17 +45,17 @@ const palgoAlgo = async (N, maxmg, minw) => {
   const socket = new net.Socket();
 
   socket.connect({ host: 'localhost', port: 8080 }, () => {
-    const NU8     = convertU32ArrayToU8ArrayLE([N]);
-    const maxmgU8 = convertU32ArrayToU8ArrayLE([maxmg.length].concat(maxmg));
-    const minwU8  = convertU32ArrayToU8ArrayLE([minw.length].concat(minw));
+    const NU8         = convertU32ArrayToU8ArrayLE([N]);
+    const maxDailyU8  = convertU32ArrayToU8ArrayLE([maxDaily.length].concat(maxDaily));
+    const minWeeklyU8 = convertU32ArrayToU8ArrayLE([minWeekly.length].concat(minWeekly));
 
-    const NArray      = new Uint8Array(NU8);
-    const maxmgArray  = new Uint8Array(maxmgU8);
-    const minwArray   = new Uint8Array(minwU8);
+    const NArray          = new Uint8Array(NU8);
+    const maxDailyArray   = new Uint8Array(maxDailyU8);
+    const minWeeklyArray  = new Uint8Array(minWeeklyU8);
 
     socket.write(NArray);
-    socket.write(maxmgArray);
-    socket.write(minwArray);
+    socket.write(maxDailyArray);
+    socket.write(minWeeklyArray);
   });
 
   socket.on('data', data => {
@@ -86,21 +86,21 @@ class NamedRecord {
 }
 
 class Muscle {
-  constructor(name, maxmg, minw) {
-    this.name   = name;
-    this.maxmg  = maxmg;
-    this.minw   = minw;
+  constructor(name, maxDaily, minWeekly) {
+    this.name       = name;
+    this.maxDaily   = minWeekly;
+    this.minWeekly  = maxDaily;
   }
 };
 
 const wrapper = async (days, muscles) => {
-  const maxmg = [];
-  const minw  = [];
+  const maxDaily = [];
+  const minWeekly = [];
   muscles.forEach(muscle => {
-    maxmg.push(muscle.maxmg);
-    minw.push(muscle.minw);
+    maxDaily.push(muscle.maxDaily);
+    minWeekly.push(muscle.minWeekly);
   });
-  const records = await palgoAlgo(days, maxmg, minw);
+  const records = await palgoAlgo(days, maxDaily, minWeekly);
   if (records.length == 0) {
     throw new Error("Input constraints are not satisfiable.");
   }
