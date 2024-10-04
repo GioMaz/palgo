@@ -4,7 +4,25 @@ Algorithm for the creation of constrained training schedules.
 
 For the explaination of the underlying algorithm read the [documentation](./docs/main.pdf).
 
-### Funzionamento
+### Building
+
+First compile and execute the backend
+
+```bash
+cd src/palgo
+make palgo_server
+./palgo_server
+```
+
+Then run the web interface
+
+```bash
+cd src/webapi
+npm i
+npm run start
+```
+
+### How it works
 
 To apply the algorithm pass a json string containing the input constraints to the body of the request:
 
@@ -14,16 +32,17 @@ To apply the algorithm pass a json string containing the input constraints to th
         "muscles": [
         {
             "name": "Upper body",
-            "maxDaily": 12,
-            "minWeekly": 24
+            "maxDaily": 4,
+            "minWeekly": 10
         },
         {
             "name":"Lower body",
-            "maxDaily": 30,
-            "minWeekly": 24
+            "maxDaily": 3,
+            "minWeekly": 8
         }
     ]
 }
+
 ```
 
 An exmaple of a request is the following:
@@ -35,3 +54,21 @@ curl http://localhost:8081/api/new \
      -v \
      -d @body.json
 ```
+
+The result should be something like this:
+
+```json
+[
+  [
+    { "name": "Upper body", "sets": 3 },
+    { "name": "Lower body", "sets": 3 }
+  ],
+  [
+    { "name": "Upper body", "sets": 4 },
+    { "name": "Lower body", "sets": 2 }
+  ],
+  [
+    { "name": "Upper body", "sets": 3 },
+    { "name": "Lower body", "sets": 3 }
+  ]
+]```
