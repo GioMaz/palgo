@@ -29,7 +29,7 @@ To apply the algorithm pass a json string containing the input constraints to th
 ```json
 {
     "days": 3,
-        "muscles": [
+    "muscles": [
         {
             "name": "Upper body",
             "maxDaily": 4,
@@ -42,7 +42,6 @@ To apply the algorithm pass a json string containing the input constraints to th
         }
     ]
 }
-
 ```
 
 An exmaple of a request is the following:
