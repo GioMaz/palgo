@@ -5,7 +5,7 @@
 
 #include "palgo.h"
 
-bool bfs(std::vector<std::vector<int>> &g, int source, int sink, std::vector<int> &parent)
+static bool bfs(std::vector<std::vector<int>> &g, int source, int sink, std::vector<int> &parent)
 {
     int n = g.size();
     std::vector<bool> visited(n, false);
@@ -31,7 +31,7 @@ bool bfs(std::vector<std::vector<int>> &g, int source, int sink, std::vector<int
 }
 
 // Ford-Fulkerson implementation O((N+M)^2 * |f*|)
-int edmonds_karp(std::vector<std::vector<int>> &g, int source, int sink)
+static int edmonds_karp(std::vector<std::vector<int>> &g, int source, int sink)
 {
     int n           = g.size();
     auto parent     = std::vector<int>(n, -1);
@@ -64,9 +64,17 @@ bool compare_record(Record r1, Record r2)
     return r1.g < r2.g;
 }
 
-std::vector<Record> palgo_maxg(int N, std::vector<int> &maxmg, std::vector<int> &minw, int maxg)
+std::vector<Record> palgo(int N, std::vector<int> &maxmg, std::vector<int> &minw)
 {
     assert(maxmg.size() == minw.size());
+
+    // Distribute series equally across days
+    int maxg = 0;
+    for (int i = 0; i < minw.size(); i++) {
+        maxg += minw[i];
+    }
+    maxg = ceil((float)maxg / (float)N);
+
     int M = maxmg.size();
 
     int sets = 0;
@@ -125,20 +133,7 @@ std::vector<Record> palgo_maxg(int N, std::vector<int> &maxmg, std::vector<int> 
     return records;
 }
 
-std::vector<Record> palgo(int N, std::vector<int> &maxmg, std::vector<int> &minw)
-{
-    assert(maxmg.size() == minw.size());
-
-    // Distribute series equally across days
-    int maxg = 0;
-    for (int i = 0; i < minw.size(); i++) {
-        maxg += minw[i];
-    }
-    maxg = ceil((float)maxg / (float)N);
-    return palgo_maxg(N, maxmg, minw, maxg);
-}
-
-int last(int s, int d)
+static int last(int s, int d)
 {
     return s % d
         ? (s % d)
