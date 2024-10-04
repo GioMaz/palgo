@@ -71,4 +71,5 @@ The result should be something like this:
     { "name": "Upper body", "sets": 3 },
     { "name": "Lower body", "sets": 3 }
   ]
-]```
+]
+```
