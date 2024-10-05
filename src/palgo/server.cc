@@ -1,7 +1,6 @@
 #include <iostream>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <fcntl.h>
 #include <pthread.h>
 #include <unistd.h>
 

@@ -9,10 +9,15 @@ run: palgo_server
 	./palgo_server
 
 clean:
-	rm palgo_server palgo_client database.sqlite
+	rm palgo_server palgo_client
 
-palgo_server: server.cc palgo.cc
-	$(CC) $(CFLAGS) $^ -o palgo_server
+%.o: %.cc
+	$(CC) $(CFLAGS) -c -o $@ $<
 
-palgo_client: client.cc
-	$(CC) $(CFLAGS) $^ -o palgo_client
+.INTERMEDIATE: server.o palgo.o client.o
+
+palgo_server: server.o palgo.o
+	$(CC) $^ -o palgo_server
+
+palgo_client: client.o
+	$(CC) $^ -o palgo_client

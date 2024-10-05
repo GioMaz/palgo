@@ -1,8 +1,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-typedef uint8_t     byte;
-typedef uint32_t    u32;
+typedef char            byte;
+typedef unsigned int    u32;
 
 #define SUCCESS 0
 #define FAILURE 1
