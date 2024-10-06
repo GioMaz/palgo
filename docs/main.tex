@@ -6,6 +6,10 @@
 \usetikzlibrary{decorations.pathreplacing}
 \usepackage{amsmath}
 \usepackage{hyperref,cleveref}
+\usepackage{mathtools}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
 \title{Algoritmo per schede di palestra vincolate}
 
@@ -96,7 +100,7 @@ Viene creato un grafo del seguente tipo:
 Il costo computazionale per la creazione del grafo è $O(MN)$.
 È possibile automatizzare la scelta di $maxg$ in modo da uniformare il numero di
 serie giornaliere, questo viene fatto assegnando a $maxg$ il valore atteso del
-numero di serie giornaliere $\lceil \sum_{i=1}^Mmin_i / N \rceil$ con costo
+numero di serie giornaliere $\ceil{\sum_{i=1}^Mmin_i / N}$ con costo
 $O(M)$.
 Successivamente viene applicato l'algoritmo di Ford-Fulkerson.
 \begin{itemize}
@@ -132,16 +136,32 @@ L'algoritmo finale ha costo complessivo pari alla somma dei precedenti:
 \end{equation*}
 
 \section{Post-processing}
-È possibile effettuare del post-processing per trasformare l'output
-dell'algoritmo da una sequenza di assegnazioni a una sequenza di esercizi, per
-fare questo è necessario prendere in input due valori $mins$ e $maxs$ che
-rappresentano rispettivamente il numero minimo e massimo di serie per esercizio.
-L'idea di base è quella di trovare un valore $d \in [mins, maxs]$ di serie per
-esercizio che vada a massimizzare il numero di serie dell'ultimo esercizio
-dell'assegnazione. Siccome il numero massimo di assegnazioni è $O((M+N)^2)$ e
-per ogni assegnazione svolgiamo un ciclo di costo
-$O(\frac{k}{\text{mins}}) = O(k)$ dove $k$ è il numero di serie per quel
-determinato record, il costo di questa fase è $O((M+N)^2k)$ che, per l'algoritmo
-complessivo va a sommarsi alla complessità calcolata nella sezione precedente.
+Al termine dell'algoritmo ci troviamo con una collezione di record (giorno,
+muscolo, serie), ognuno di questi record può essere suddiviso in più
+esercizi. Dati i valori $K$ numero di serie del record e $mins$ e $maxs$
+rispettivamente il numero minimo e massimo di serie per esercizio, dobbiamo
+trovare un insieme $S$ tale che:
+\begin{itemize}
+    \item $\sum_{s \in S} s = K$
+    \item $mins \leq s_i \leq maxs \; \forall s \in S$
+    \item $|S|$ sia il più piccolo posssibile
+    \item Il valore di $d = \sum_{s_1, s_2 \in S} |s_1 - s_2|$ sia il più piccolo
+          possibile (la differenza tra il numero di serie tra due esercizi sia
+          minimizzata)
+\end{itemize}
+Per fare ciò possiamo applicare il seguente algoritmo greedy:
+\begin{itemize}
+    \item Poniamo $|S| = \ceil{\frac{K}{maxs}}$ con ogni elemento di $S$
+          pari a $maxs$
+    \item Prendiamo un $s \in S$ diminuiamo $s$ di uno fino a quando
+          $\sum_{s \in S} s$ diventa $K$ oppure fino a quando $s$ diventa $mins$
+    \item Se alla fine dell'algoritmo $\sum_{s \in S} \neq K$ non esiste una
+          soluzione e ritorniamo $\{ K \}$
+    \item L'ultimo passo è quello di minimizzare la differenza tra i vari
+          $s \in S$ per fare ciò poniamo $s_1 = \floor{(s_1 + s_1) / 2}$
+          e $s_2 = \ceil{(s_1 + s_1) / 2} \; \forall s_1, s_2 \in S$.
+\end{itemize}
+L'algoritmo ha complessità $O(MN * (maxs - mins) + \ceil{K / maxs}^2)$.
+\section{Dimostrazione proprietà di scelta greedy (TODO)}
 
 \end{document}

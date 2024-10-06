@@ -216,7 +216,7 @@ void flatten(std::vector<Record> &exercises)
     }
 }
 
-std::vector<Record> subdivide(Record record, int mins, int maxs)
+std::vector<Record> subdivide1(Record record, int mins, int maxs)
 {
     std::vector<Record> exercises;
     bool rv = subdivide_aux(record, mins, maxs, exercises);
@@ -227,6 +227,33 @@ std::vector<Record> subdivide(Record record, int mins, int maxs)
     return exercises;
 }
 
+std::vector<Record> subdivide2(Record record, int mins, int maxs)
+{
+    int nexer   = ceil(((float)record.s) / ((float)maxs));
+    int total   = maxs * nexer;
+
+    std::vector<Record> exercises(nexer, (Record) {
+        .g = record.g,
+        .m = record.m,
+        .s = maxs,
+    });
+
+    int i = 0;
+    while (total > record.s && i < nexer) {
+        while (total > record.s && exercises[i].s > mins) {
+            exercises[i].s--;
+            total--;
+        }
+        i++;
+    }
+
+    if (total != record.s) {
+        return { record };
+    } else {
+        return exercises;
+    }
+}
+
 std::vector<Record> palgo_exercises2(int N, std::vector<int> &maxmg, std::vector<int> &minw, int mins, int maxs)
 {
     assert(maxmg.size() == minw.size());
@@ -235,7 +262,7 @@ std::vector<Record> palgo_exercises2(int N, std::vector<int> &maxmg, std::vector
     std::vector<Record> exercises;
 
     for (auto &record : records) {
-        auto record_exercises = subdivide(record, mins, maxs);
+        auto record_exercises = subdivide2(record, mins, maxs);
         flatten(record_exercises);
         exercises.insert(exercises.end(),
                 std::begin(record_exercises),
