@@ -59,7 +59,7 @@ static int edmonds_karp(std::vector<std::vector<int>> &g, int source, int sink)
     return max_flow;
 }
 
-bool compare_record(Record r1, Record r2)
+static bool compare_record(Record r1, Record r2)
 {
     return r1.g < r2.g;
 }
@@ -133,7 +133,7 @@ std::vector<Record> palgo_records(int N, std::vector<int> &maxmg, std::vector<in
     return records;
 }
 
-void flatten(std::vector<Record> &exercises)
+static void flatten(std::vector<Record> &exercises)
 {
     for (int i = 0; i < exercises.size(); i++) {
         for (int j = 0; j < exercises.size(); j++) {
@@ -146,7 +146,7 @@ void flatten(std::vector<Record> &exercises)
     }
 }
 
-std::vector<Record> subdivide(Record record, int mins, int maxs)
+static std::vector<Record> subdivide(Record record, int mins, int maxs)
 {
     int nexer   = ceil(((float)record.s) / ((float)maxs));
     int total   = maxs * nexer;
@@ -176,6 +176,8 @@ std::vector<Record> subdivide(Record record, int mins, int maxs)
 std::vector<Record> palgo_exercises(int N, std::vector<int> &maxmg, std::vector<int> &minw, int mins, int maxs)
 {
     assert(maxmg.size() == minw.size());
+    assert(mins <= maxs);
+    assert(mins > 0);
 
     auto records = palgo_records(N, maxmg, minw);
     std::vector<Record> exercises;
