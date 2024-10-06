@@ -145,9 +145,9 @@ trovare un insieme $S$ tale che:
     \item $\sum_{s \in S} s = K$
     \item $mins \leq s_i \leq maxs \; \forall s \in S$
     \item $|S|$ sia il più piccolo posssibile
-    \item Il valore di $d = \sum_{s_1, s_2 \in S} |s_1 - s_2|$ sia il più piccolo
-          possibile (la differenza tra il numero di serie tra due esercizi sia
-          minimizzata)
+    \item Il valore di $d = \sum_{s_1, s_2 \in S} |s_1 - s_2|$ sia il più
+          piccolo possibile (la differenza tra il numero di serie tra due
+          esercizi sia minimizzata)
 \end{itemize}
 Per fare ciò possiamo applicare il seguente algoritmo greedy:
 \begin{itemize}
@@ -161,7 +161,11 @@ Per fare ciò possiamo applicare il seguente algoritmo greedy:
           $s \in S$ per fare ciò poniamo $s_1 = \floor{(s_1 + s_1) / 2}$
           e $s_2 = \ceil{(s_1 + s_1) / 2} \; \forall s_1, s_2 \in S$.
 \end{itemize}
-L'algoritmo ha complessità $O(MN * (maxs - mins) + \ceil{K / maxs}^2)$.
+L'algoritmo ha complessità
+$O(MN * (maxs - mins) * \ceil{K / maxs} + \ceil{K / maxs}^2)$.
+Supponendo che $mins$ e $maxs$ non facciano parte dell'input la complessità
+diventa $O(MNK + K^2)$.
+
 \section{Dimostrazione proprietà di scelta greedy (TODO)}
 
 \end{document}

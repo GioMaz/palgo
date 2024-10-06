@@ -100,6 +100,7 @@ const wrapper = async (days, muscles) => {
     maxDaily.push(muscle.maxDaily);
     minWeekly.push(muscle.minWeekly);
   });
+
   const records = await palgoAlgo(days, maxDaily, minWeekly);
   if (records.length == 0) {
     throw new Error("Input constraints are not satisfiable.");
