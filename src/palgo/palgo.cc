@@ -64,7 +64,7 @@ bool compare_record(Record r1, Record r2)
     return r1.g < r2.g;
 }
 
-std::vector<Record> palgo(int N, std::vector<int> &maxmg, std::vector<int> &minw)
+std::vector<Record> palgo_records(int N, std::vector<int> &maxmg, std::vector<int> &minw)
 {
     assert(maxmg.size() == minw.size());
 
@@ -133,76 +133,6 @@ std::vector<Record> palgo(int N, std::vector<int> &maxmg, std::vector<int> &minw
     return records;
 }
 
-static int last(int s, int d)
-{
-    return s % d
-        ? (s % d)
-        : (d);
-}
-
-std::vector<Record> palgo_exercises1(int N, std::vector<int> &maxmg, std::vector<int> &minw, int mins, int maxs)
-{
-    assert(maxmg.size() == minw.size());
-
-    auto records = palgo(N, maxmg, minw);
-    std::vector<Record> exercises;
-
-    for (auto &record : records) {
-        if (record.s <= mins) {
-            exercises.push_back(record);
-        } else {
-            // Maximizing the last exercise for a specific muscle
-            // since last(record.s, d) is always <= d
-            int best_fit = mins;
-            for (int d = mins+1; d <= maxs; d++) {
-                if (last(record.s, d) > last(record.s, best_fit)) {
-                    best_fit = d;
-                }
-            }
-
-            while (record.s) {
-                Record exercise = {
-                    .g = record.g,
-                    .m = record.m,
-                    .s = std::min(best_fit, record.s),
-                };
-                exercises.push_back(exercise);
-                record.s -= exercise.s;
-            }
-        }
-    }
-
-    return exercises;
-}
-
-bool subdivide_aux(Record record, int mins, int maxs, std::vector<Record> &exercises)
-{
-    if (record.s == 0) {
-        return true;
-    } else if (record.s < mins) {
-        return false;
-    } else {
-        for (int c = maxs; c >= mins; c--) {
-            Record record_new = {
-                .g = record.g,
-                .m = record.m,
-                .s = c
-            };
-            exercises.push_back(record_new);
-
-            record.s -= c;
-            bool rv = subdivide_aux(record, mins, maxs, exercises);
-            if (rv) {
-                return true;
-            }
-            record.s += c;
-
-            exercises.pop_back();
-        }
-    }
-    return false;
-}
-
 void flatten(std::vector<Record> &exercises)
 {
     for (int i = 0; i < exercises.size(); i++) {
@@ -216,18 +146,7 @@ void flatten(std::vector<Record> &exercises)
     }
 }
 
-std::vector<Record> subdivide1(Record record, int mins, int maxs)
-{
-    std::vector<Record> exercises;
-    bool rv = subdivide_aux(record, mins, maxs, exercises);
-    if (!rv) {
-        exercises.clear();
-        exercises.push_back(record);
-    }
-    return exercises;
-}
-
-std::vector<Record> subdivide2(Record record, int mins, int maxs)
+std::vector<Record> subdivide(Record record, int mins, int maxs)
 {
     int nexer   = ceil(((float)record.s) / ((float)maxs));
     int total   = maxs * nexer;
@@ -254,15 +173,15 @@ std::vector<Record> subdivide2(Record record, int mins, int maxs)
     }
 }
 
-std::vector<Record> palgo_exercises2(int N, std::vector<int> &maxmg, std::vector<int> &minw, int mins, int maxs)
+std::vector<Record> palgo_exercises(int N, std::vector<int> &maxmg, std::vector<int> &minw, int mins, int maxs)
 {
     assert(maxmg.size() == minw.size());
 
-    auto records = palgo(N, maxmg, minw);
+    auto records = palgo_records(N, maxmg, minw);
     std::vector<Record> exercises;
 
     for (auto &record : records) {
-        auto record_exercises = subdivide2(record, mins, maxs);
+        auto record_exercises = subdivide(record, mins, maxs);
         flatten(record_exercises);
         exercises.insert(exercises.end(),
                 std::begin(record_exercises),

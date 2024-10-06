@@ -89,8 +89,7 @@ void *handle_request(void *heap_fd)
     std::vector<int> minw_vec(minw, minw + minw_size);
 
     // Apply algorithm
-    auto exercises = palgo_exercises2(days,
-            maxmg_vec, minw_vec, 3, 4);
+    auto exercises = palgo_exercises(days, maxmg_vec, minw_vec);
 
     // Write output
     write_response(fd, exercises);
