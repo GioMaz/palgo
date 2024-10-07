@@ -6,7 +6,7 @@ For the explaination of the underlying algorithm read the [documentation](./docs
 
 ### Building
 
-First compile and execute the backend
+First compile and execute the backend:
 
 ```bash
 cd src/palgo
@@ -14,7 +14,7 @@ make palgo_server
 ./palgo_server
 ```
 
-Then run the web interface
+Then run the web interface:
 
 ```bash
 cd src/webapi
@@ -44,7 +44,7 @@ To apply the algorithm pass a json string containing the input constraints to th
 }
 ```
 
-An exmaple of a request is the following:
+An exmaple request is the following:
 
 ```bash
 curl http://localhost:8081/api/new \
