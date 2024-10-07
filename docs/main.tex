@@ -164,10 +164,8 @@ Per fare ciò possiamo applicare il seguente algoritmo greedy:
 L'algoritmo ha complessità
 $O((maxs - mins) * \ceil{K / maxs} + \ceil{K / maxs}^2)$.
 Supponendo che $mins$ e $maxs$ non facciano parte dell'input essa diventa
-$O(K^2)$. Applicando poi l'algoritmo per ogni record presente nell'output
-della fase precedente otteniamo una complessità pari a $O(NMK_i^2)$ dove $K_i$ è
-il numero di serie del record $i$-esimo. Quest'ultima complessità si va
-a sommare a quella calcolata nella sezione precedente.
+$O(K^2)$. Va comunque tenuto a mente che questa procedura deve essere applicata
+ad ogni record presente nell'output della fase precedente.
 
 \section{Dimostrazione proprietà di scelta greedy (TODO)}
 
