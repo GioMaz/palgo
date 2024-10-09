@@ -59,15 +59,15 @@ class NamedRecord:
     def __str__(self) -> str:
         return "(\"{}\", {})".format(self.name, self.sets)
 
-def palgo_named_records(palgo, n: int, muscles: [Muscle], mins=3, maxs=4) -> [NamedRecord]:
+def palgo_named_records(palgo, days, muscles: [Muscle], mins=3, maxs=4) -> [NamedRecord]:
     max_daily  = []
     min_weekly = []
     for muscle in muscles:
         max_daily.append(muscle.max_daily)
         min_weekly.append(muscle.min_weekly)
-    exercises = palgo_exercises(palgo, n, max_daily, min_weekly,
+    exercises = palgo_exercises(palgo, days, max_daily, min_weekly,
                                 mins, maxs)
-    days = [[]] * n
+    days = [[]] * days
     for exercise in exercises:
         days[exercise.g].append(
             NamedRecord(muscles[exercise.m].name, exercise.s))
