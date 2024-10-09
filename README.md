@@ -17,7 +17,7 @@ make palgo_server
 Then run the web interface:
 
 ```bash
-cd src/webapi
+cd src/js
 npm i
 npm run start
 ```

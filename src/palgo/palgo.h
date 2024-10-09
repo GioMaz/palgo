@@ -19,4 +19,18 @@ std::vector<Record> palgo_exercises(
         int mins = 3,
         int maxs = 4);
 
+struct RecordList {
+    Record *records;
+    int size;
+};
+
+extern "C" {
+    RecordList exercises_wrapper(
+            int N,
+            int *maxmg, int *minw, int size,
+            int mins, int maxs);
+
+    void free_wrapper(RecordList exercises);
+}
+
 #endif

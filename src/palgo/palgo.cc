@@ -193,6 +193,29 @@ std::vector<Record> palgo_exercises(int N, std::vector<int> &maxmg, std::vector<
     return exercises;
 }
 
+RecordList exercises_wrapper(int N, int *maxmg, int *minw, int size,
+                             int mins, int maxs)
+{
+    std::vector<int> maxmg_vec(maxmg, &maxmg[size]);
+    std::vector<int> minw_vec(minw, &minw[size]);
+
+    auto exercises_vec = palgo_exercises(N, maxmg_vec, minw_vec, mins, maxs);
+    int exercises_size = (int)exercises_vec.size();
+
+    Record *exercises = (Record *)malloc(exercises_size * sizeof(Record));
+    std::copy(exercises_vec.begin(), exercises_vec.end(), exercises);
+
+    return (RecordList) {
+        .records = exercises,
+        .size    = exercises_size,
+    };
+}
+
+void free_wrapper(RecordList exercises)
+{
+    free(exercises.records);
+}
+
 // int main()
 // {
 //     //                          Dati initziali
