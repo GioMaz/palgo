@@ -21,7 +21,7 @@ def test0():
         Muscle("Tricipiti", 8,  16),
     ];
     schedule = palgo_schedule(palgo, days, muscles)
-    print("TEST1", schedule, sep='\n')
+    print("TEST0", schedule, sep='\n')
 
 def test1():
     days = [
@@ -62,8 +62,8 @@ def test1():
             NamedRecord("Spalle", 4),
         ]
     ]
-    schedule = palgo_reformat(palgo, Schedule(days))
-    print("TEST2", schedule, sep='\n')
+    schedule = palgo_reformat(palgo, Schedule(days), 3)
+    print("TEST1", schedule, sep='\n')
 
 
 if __name__ == "__main__":

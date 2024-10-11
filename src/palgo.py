@@ -59,7 +59,7 @@ class NamedRecord:
         self.sets = sets
 
     def __repr__(self) -> str:
-        return "(\"{}\", {})".format(self.name, self.sets)
+        return "(\"{}\",\t{})".format(self.name, self.sets)
 
 class Schedule:
     def __init__(self, days: [[NamedRecord]]):
@@ -68,8 +68,9 @@ class Schedule:
     def __repr__(self) -> str:
         result = ""
         for day, exercises in enumerate(self.days):
+            result += "DAY " + str(day) + "\n"
             for exercise in exercises:
-                result += str(day) + " " + str(exercise) + "\n"
+                result += "\t" + str(exercise) + "\n"
         return result
 
 def palgo_schedule(palgo, ndays, muscles: [Muscle], mins=3, maxs=4) -> Schedule:
@@ -103,7 +104,7 @@ def schedule_to_muscles(source: Schedule) -> [Muscle]:
 
     return muscles
 
-def palgo_reformat(palgo, schedule: Schedule) -> Schedule:
+def palgo_reformat(palgo, schedule: Schedule, ndays) -> Schedule:
     muscles  = schedule_to_muscles(schedule)
-    schedule = palgo_schedule(palgo, len(schedule.days), muscles)
+    schedule = palgo_schedule(palgo, ndays, muscles)
     return schedule
