@@ -11,7 +11,6 @@ Compile the library:
 ```bash
 cd src
 make
-./palgo_server
 ```
 
 Run the python script:
