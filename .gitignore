@@ -1,8 +1,4 @@
-palgo_server
-palgo_client
 libpalgo.so
-database.sqlite
-node_modules/
 *.wasm
 *.aux
 *.fdb_latexmk
