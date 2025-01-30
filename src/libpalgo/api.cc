@@ -1,4 +1,5 @@
 #include <vector>
+#include <cstdlib>
 
 #include "api.h"
 #include "palgo.h"

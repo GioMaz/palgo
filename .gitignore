@@ -1,4 +1,6 @@
-libpalgo.so
+__pycache__/
+*.o
+*.so
 *.wasm
 *.aux
 *.fdb_latexmk

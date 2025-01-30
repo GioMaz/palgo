@@ -2,6 +2,9 @@
 #include <vector>
 #include <queue>
 #include <assert.h>
+#include <climits>
+#include <algorithm>
+#include <math.h>
 
 #include "palgo.h"
 
@@ -70,7 +73,7 @@ std::vector<Record> palgo_records(int N, std::vector<int> &maxmg, std::vector<in
 
     // Distribute series equally across days
     int maxg = 0;
-    for (int i = 0; i < minw.size(); i++) {
+    for (size_t i = 0; i < minw.size(); i++) {
         maxg += minw[i];
     }
     maxg = ceil((float)maxg / (float)N);
@@ -135,8 +138,8 @@ std::vector<Record> palgo_records(int N, std::vector<int> &maxmg, std::vector<in
 
 static void flatten(std::vector<Record> &exercises)
 {
-    for (int i = 0; i < exercises.size(); i++) {
-        for (int j = 0; j < exercises.size(); j++) {
+    for (size_t i = 0; i < exercises.size(); i++) {
+        for (size_t j = 0; j < exercises.size(); j++) {
             if (i != j) {
                 float mean = ((float)(exercises[i].s + exercises[j].s)) / 2.0f;
                 exercises[i].s = floor(mean);

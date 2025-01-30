@@ -8,7 +8,7 @@ from palgo import (
     palgo_schedule,
 )
 
-palgo = ct.CDLL("libpalgo.so")
+palgo = ct.CDLL("./libpalgo.so")
 
 def test0():
     days = 3;
